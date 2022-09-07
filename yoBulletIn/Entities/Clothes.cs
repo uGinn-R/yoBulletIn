@@ -11,7 +11,6 @@ namespace yoBulletIn.Entities
     {
       
         [Display(Name = "Size")]
-        [DataType(DataType.Custom)]
         public decimal Size { get; set; }
 
         [Display(Name = "Brand")]
