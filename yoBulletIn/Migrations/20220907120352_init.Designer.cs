@@ -10,8 +10,8 @@ using yoBulletIn;
 namespace yoBulletIn.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20220907080040__clothes_add_")]
-    partial class _clothes_add_
+    [Migration("20220907120352_init")]
+    partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -269,6 +269,9 @@ namespace yoBulletIn.Migrations
 
                     b.Property<decimal>("Size")
                         .HasColumnType("decimal(18,2)");
+
+                    b.Property<int?>("gender")
+                        .HasColumnType("int");
 
                     b.HasIndex("ItemId");
 
