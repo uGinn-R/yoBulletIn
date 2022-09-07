@@ -1,0 +1,20 @@
+﻿@model Item
+@{
+}
+
+<div class="card">
+    <div class="card-header">
+        Select category:
+    </div>
+    <div class="card-body">
+        <form method="post" asp-action="Create">
+            <div class="form-group">
+                <select asp-for="Category" asp-items="Html.GetEnumSelectList<ItemCategory>()">
+                    <option selected="selected" value="">Select category</option>
+                </select>
+                <input type="submit" value="Submit" />
+            </div>
+        </form>
+    </div>
+</div>
+
