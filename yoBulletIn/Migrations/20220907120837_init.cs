@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace yoBulletIn.Migrations
 {
-    public partial class _initial : Migration
+    public partial class init : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -162,15 +162,37 @@ namespace yoBulletIn.Migrations
                     Description = table.Column<string>(nullable: true),
                     ImgPath = table.Column<string>(nullable: true),
                     Created = table.Column<DateTime>(nullable: false),
-                    ItemOwnerId = table.Column<string>(nullable: true)
+                    ItemOwnerId = table.Column<string>(nullable: true),
+                    Category = table.Column<int>(nullable: true),
+                    Discriminator = table.Column<string>(nullable: false),
+                    Size = table.Column<decimal>(nullable: true),
+                    Brand = table.Column<string>(nullable: true),
+                    gender = table.Column<int>(nullable: true),
+                    ItemId = table.Column<Guid>(nullable: true),
+                    Area = table.Column<decimal>(nullable: true),
+                    NumberOfRooms = table.Column<int>(nullable: true),
+                    Floor = table.Column<int>(nullable: true),
+                    RealEstate_ItemId = table.Column<Guid>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Items", x => x.Id);
                     table.ForeignKey(
+                        name: "FK_Items_Items_ItemId",
+                        column: x => x.ItemId,
+                        principalTable: "Items",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
                         name: "FK_Items_AspNetUsers_ItemOwnerId",
                         column: x => x.ItemOwnerId,
                         principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Items_Items_RealEstate_ItemId",
+                        column: x => x.RealEstate_ItemId,
+                        principalTable: "Items",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -215,9 +237,19 @@ namespace yoBulletIn.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Items_ItemId",
+                table: "Items",
+                column: "ItemId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Items_ItemOwnerId",
                 table: "Items",
                 column: "ItemOwnerId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Items_RealEstate_ItemId",
+                table: "Items",
+                column: "RealEstate_ItemId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
