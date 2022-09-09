@@ -13,6 +13,8 @@ using Microsoft.EntityFrameworkCore;
 using yoBulletIn.Services;
 using yoBulletIn.Entities;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI;
+using Microsoft.AspNetCore.Identity.UI.Services;
 
 namespace yoBulletIn
 {
@@ -36,14 +38,18 @@ namespace yoBulletIn
             services.AddDbContext<AppDbContext>
                 (x => x.UseSqlServer(Configuration.GetConnectionString("SQLBulletin")));
 
+            services.AddRazorPages();
+
             services.AddIdentity<User, IdentityRole>(options =>
             {
                 options.Password.RequiredLength = 6;
                 options.Password.RequireLowercase = false;
                 options.Password.RequireUppercase = false;
                 options.Password.RequireDigit = false;
+                options.Password.RequireNonAlphanumeric = false;
                 options.User.RequireUniqueEmail = true;
-            }).AddEntityFrameworkStores<AppDbContext>().AddDefaultTokenProviders();
+            }).AddEntityFrameworkStores<AppDbContext>().AddDefaultTokenProviders().AddDefaultUI(); ;
+
 
             services.ConfigureApplicationCookie(options =>
             {
@@ -54,6 +60,14 @@ namespace yoBulletIn
                 options.ExpireTimeSpan = TimeSpan.FromHours(1);
                 options.SlidingExpiration = true;
             });
+
+            services.AddDistributedMemoryCache();
+
+            services.AddSession(options => {
+                options.Cookie.HttpOnly = true;
+                options.Cookie.IsEssential = true;
+
+                });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -74,6 +88,8 @@ namespace yoBulletIn
 
             app.UseRouting();
 
+            app.UseSession();
+
             app.UseCookiePolicy();
             app.UseAuthentication();
             app.UseAuthorization();
@@ -83,6 +99,7 @@ namespace yoBulletIn
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
+                endpoints.MapRazorPages();
             });
         }
     }

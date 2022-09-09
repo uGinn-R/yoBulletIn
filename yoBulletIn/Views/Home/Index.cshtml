@@ -7,11 +7,21 @@
     <h1 class="display-4">Welcome</h1>
     <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
     @foreach (var item in Model)
-    {
-        <p>
-            @item.Description
-        </p>
+    { 
+        <p>@item.Description</p>
         <p>@item.Title</p>
+        foreach (var pi in item.GetType().GetProperties())
+        {
+            var res = pi.GetValue(item, null);
+            if (res != null && pi.Name != "Id")
+            {
+                <p>
+                    <label>@pi.Name =  @pi.GetValue(item, null)</label>
+                </p>
+            }
+
+        }
+       
     }
 
 </div>

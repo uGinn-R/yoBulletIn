@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
-namespace yoBulletIn.Entities
+namespace yoBulletIn.Enums
 {
     public enum Gender
     {

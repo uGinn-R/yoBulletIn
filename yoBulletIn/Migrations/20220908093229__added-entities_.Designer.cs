@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using yoBulletIn;
 
 namespace yoBulletIn.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220908093229__added-entities_")]
+    partial class _addedentities_
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -262,8 +264,8 @@ namespace yoBulletIn.Migrations
                     b.Property<Guid?>("ItemId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("Mark")
-                        .HasColumnType("int");
+                    b.Property<string>("Mark")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Mileage")
                         .HasColumnType("int");
@@ -408,28 +410,28 @@ namespace yoBulletIn.Migrations
             modelBuilder.Entity("yoBulletIn.Entities.Car", b =>
                 {
                     b.HasOne("yoBulletIn.Entities.Item", "Item")
-                        .WithMany()
+                        .WithMany("CarsItems")
                         .HasForeignKey("ItemId");
                 });
 
             modelBuilder.Entity("yoBulletIn.Entities.Clothes", b =>
                 {
                     b.HasOne("yoBulletIn.Entities.Item", "Item")
-                        .WithMany()
+                        .WithMany("ClothesItems")
                         .HasForeignKey("ItemId");
                 });
 
             modelBuilder.Entity("yoBulletIn.Entities.Electronics", b =>
                 {
                     b.HasOne("yoBulletIn.Entities.Item", "Item")
-                        .WithMany()
+                        .WithMany("ElectronicsItems")
                         .HasForeignKey("ItemId");
                 });
 
             modelBuilder.Entity("yoBulletIn.Entities.RealEstate", b =>
                 {
                     b.HasOne("yoBulletIn.Entities.Item", "Item")
-                        .WithMany()
+                        .WithMany("RealEstateItems")
                         .HasForeignKey("ItemId");
                 });
 #pragma warning restore 612, 618

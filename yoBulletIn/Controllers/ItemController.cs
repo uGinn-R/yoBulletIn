@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using yoBulletIn.Entities;
 using yoBulletIn.Services;
+using yoBulletIn.Enums;
 
 namespace yoBulletIn.Controllers
 {
@@ -28,29 +29,18 @@ namespace yoBulletIn.Controllers
         }
 
         [HttpPost]
+
         public IActionResult Create(Item item)
         {
-            switch (item.Category)
+            return item.Category switch
             {
-                case ItemCategory.RealEstate:
-                    return View("CreateRealEstatePartial", new RealEstate() { Category = ItemCategory.RealEstate });
-
-                case ItemCategory.Cars:
-                    return View("CreateCarsPartial", new Car() { Category = ItemCategory.Cars });
-
-                case ItemCategory.Electronics:
-                    return View("CreateElectronicsPartial", new Electronics() { Category = ItemCategory.Electronics });
-
-                case ItemCategory.Clothes:
-                    return View("CreateClothesPartial", new Clothes() { Category = ItemCategory.Clothes});
-
-                case ItemCategory.Other:
-                    return View("CreateOtherPartial", new Item() { Category = ItemCategory.Other });
-
-                default:
-                    return View();
-            }
-            
+                ItemCategory.RealEstate => View("CreateRealEstatePartial", new RealEstate() { Category = ItemCategory.RealEstate }),
+                ItemCategory.Cars => View("CreateCarsPartial", new Car() { Category = ItemCategory.Cars }),
+                ItemCategory.Electronics => View("CreateElectronicsPartial", new Electronics() { Category = ItemCategory.Electronics }),
+                ItemCategory.Clothes => View("CreateClothesPartial", new Clothes() { Category = ItemCategory.Clothes }),
+                ItemCategory.Other => View("CreateOtherPartial", new Item() { Category = ItemCategory.Other }),
+                _ => View(),
+            };
         }
 
         [HttpPost]
@@ -64,6 +54,13 @@ namespace yoBulletIn.Controllers
         public IActionResult SaveClothes(Clothes clothes)
         {
             _repo.SaveItem(clothes);
+            return RedirectToAction("Index", "Home");
+        }
+
+        [HttpPost]
+        public IActionResult SaveCars(Car cars)
+        {
+            _repo.SaveItem(cars);
             return RedirectToAction("Index", "Home");
         }
     }

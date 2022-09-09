@@ -1,5 +1,6 @@
 ﻿@model Item
 @{
+    
 }
 
 <div class="card">
@@ -9,10 +10,15 @@
     <div class="card-body">
         <form method="post" asp-action="Create">
             <div class="form-group">
-                <select asp-for="Category" asp-items="Html.GetEnumSelectList<ItemCategory>()">
+                @foreach (var item in Enum.GetValues(typeof(ItemCategory)))
+                {
+                    <input type="submit" asp-for="Category" value="@item.ToString()" class="btn btn-outline-secondary" />
+                }
+
+                @*<select asp-for="Category" asp-items="Html.GetEnumSelectList<ItemCategory>()">
                     <option selected="selected" value="">Select category</option>
-                </select>
-                <input type="submit" value="Submit" />
+                </select>*@
+                <input type="submit" value="Next" class="btn btn-primary" />
             </div>
         </form>
     </div>

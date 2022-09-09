@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using yoBulletIn;
 
 namespace yoBulletIn.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220908095021__added-entities_3")]
+    partial class _addedentities_3
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -262,8 +264,8 @@ namespace yoBulletIn.Migrations
                     b.Property<Guid?>("ItemId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("Mark")
-                        .HasColumnType("int");
+                    b.Property<string>("Mark")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Mileage")
                         .HasColumnType("int");
