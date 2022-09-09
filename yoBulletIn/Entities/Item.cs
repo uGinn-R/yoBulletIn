@@ -10,11 +10,11 @@ namespace yoBulletIn.Entities
 {
     public class Item : EntityBase
     {
-        public User ItemOwner { get; set; }
+        public string ItemOwner { get; set; }
 
         [EnumDataType(typeof(ItemCategory))]
         public ItemCategory? Category {get; set;}
-        
+
         //public IEnumerable<RealEstate> RealEstateItems { get; set; }
         //public IEnumerable<Clothes> ClothesItems { get; set; }
         //public IEnumerable<Car> CarsItems { get; set; }

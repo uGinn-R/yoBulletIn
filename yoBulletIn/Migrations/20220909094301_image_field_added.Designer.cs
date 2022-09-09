@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using yoBulletIn;
 
 namespace yoBulletIn.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220909094301_image_field_added")]
+    partial class image_field_added
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -169,21 +171,21 @@ namespace yoBulletIn.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("ImagePath")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("ImgPath")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("ItemOwner")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<string>("ItemOwnerId")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Title")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("ItemOwnerId");
 
                     b.ToTable("Items");
 
@@ -403,9 +405,9 @@ namespace yoBulletIn.Migrations
 
             modelBuilder.Entity("yoBulletIn.Entities.Item", b =>
                 {
-                    b.HasOne("yoBulletIn.Entities.User", null)
+                    b.HasOne("yoBulletIn.Entities.User", "ItemOwner")
                         .WithMany("UserItems")
-                        .HasForeignKey("UserId");
+                        .HasForeignKey("ItemOwnerId");
                 });
 
             modelBuilder.Entity("yoBulletIn.Entities.Car", b =>

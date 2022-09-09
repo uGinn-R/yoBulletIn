@@ -45,7 +45,7 @@ namespace yoBulletIn.Services
 
         public IEnumerable<Item> GetMyItems(User user)
         {
-            return _context.Items.Where(x => x.ItemOwner.Id == user.Id).ToList();
+            return _context.Items.Where(x => x.ItemOwner == user.Id).ToList();
         }
 
         public async Task<List<Item>> FindItem(string query)

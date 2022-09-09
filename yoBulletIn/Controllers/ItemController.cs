@@ -6,16 +6,24 @@ using System.Threading.Tasks;
 using yoBulletIn.Entities;
 using yoBulletIn.Services;
 using yoBulletIn.Enums;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authorization;
 
 namespace yoBulletIn.Controllers
 {
     public class ItemController : Controller
     {
         private readonly IDbRepository _repo;
+        UserManager<User> _UserManager;
+        SignInManager<User> _SignInManager;
 
-        public ItemController(IDbRepository repo)
+
+        public ItemController(IDbRepository repo, UserManager<User> UserManager, SignInManager<User> SignInManager)
         {
             _repo = repo;
+            _SignInManager = SignInManager;
+            _UserManager = UserManager;
         }
 
         public IActionResult Index()
@@ -58,9 +66,18 @@ namespace yoBulletIn.Controllers
         }
 
         [HttpPost]
-        public IActionResult SaveCars(Car cars)
+        public IActionResult SaveCars(Car car, IFormFile Image)
         {
-            _repo.SaveItem(cars);
+            car.ItemOwner = _UserManager.GetUserId(User);
+            if (Image != null)
+            {
+                var response = ImageUploader.UploadImage(Image);
+                if (response.StatusCode == 200) // OK
+                {
+                    car.ImgPath = response.URL;
+                }
+            }
+            _repo.SaveItem(car);
             return RedirectToAction("Index", "Home");
         }
     }
