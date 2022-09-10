@@ -16,13 +16,10 @@ namespace yoBulletIn.Controllers
     {
         private readonly IDbRepository _repo;
         UserManager<User> _UserManager;
-        SignInManager<User> _SignInManager;
 
-
-        public ItemController(IDbRepository repo, UserManager<User> UserManager, SignInManager<User> SignInManager)
+        public ItemController(IDbRepository repo, UserManager<User> UserManager)
         {
             _repo = repo;
-            _SignInManager = SignInManager;
             _UserManager = UserManager;
         }
 
