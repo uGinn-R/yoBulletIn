@@ -13,9 +13,9 @@ namespace yoBulletIn.Entities
         
         [Display(Name = "Model")]
         public string Model { get; set; }
-        private DateTime? year { get; set; } = null;
+        private DateTime? _Year { get; set; } = null;
         [Display(Name = "Year")]
-        public DateTime Year { get { return year?? DateTime.Now; } set { this.year = value; }  }
+        public DateTime Year { get { return _Year?? DateTime.Now; } set { _Year = value; }  }
         [Display(Name = "Mileage, km")]
         public int Mileage { get; set; }
         [Display(Name = "Mark")]

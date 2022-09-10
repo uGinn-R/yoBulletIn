@@ -16,6 +16,7 @@ namespace yoBulletIn.Entities
         [Required]
         public Guid Id { get; set; }
 
+        [Required(ErrorMessage = "Name field can't be empty")]
         [Display(Name = "Title (Name)")]
         public virtual string Title { get; set; }
 

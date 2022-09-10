@@ -28,9 +28,9 @@ namespace yoBulletIn.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Index(string query)
+        public async Task<IActionResult> Search(string query)
         {
-            return View(await _repo.FindItem(query));
+            return View("_SearchPartial" ,await _repo.FindItem(query));
         }
 
         public IActionResult Privacy()
