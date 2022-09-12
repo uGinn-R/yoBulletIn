@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 using yoBulletIn.Entities;
 using yoBulletIn.Models;
@@ -30,7 +31,8 @@ namespace yoBulletIn.Controllers
         [HttpGet]
         public async Task<IActionResult> Search(string query)
         {
-            return View("_SearchPartial" ,await _repo.FindItem(query));
+            Expression<Func<Item, bool>> Query = x => x.Description.Contains(query) || x.Title.Contains(query);
+            return View("_SearchPartial" ,await _repo.FindItem(Query));
         }
 
         public IActionResult Privacy()

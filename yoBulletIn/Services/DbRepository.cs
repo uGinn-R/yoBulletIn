@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 using yoBulletIn.Entities;
 
@@ -48,9 +49,9 @@ namespace yoBulletIn.Services
             return _context.Items.Where(x => x.ItemOwner == user.Id).ToList();
         }
 
-        public async Task<List<Item>> FindItem(string query)
+        public async Task<List<Item>> FindItem(Expression<Func<Item, bool>> query)
         {
-                return await _context.Items.Where(x => x.Description.Contains(query) || x.Title.Contains(query)).AsNoTracking().ToListAsync();
+                return await _context.Items.Where(query).Select(x => x).ToListAsync();
         }
     }
 }

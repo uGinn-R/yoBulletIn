@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 using yoBulletIn.Entities;
 
@@ -12,7 +13,7 @@ namespace yoBulletIn.Services
 
         public IEnumerable<Item> GetMyItems(User user);
 
-        public Task<List<Item>> FindItem(string query);
+        public Task<List<Item>> FindItem(Expression<Func<Item, bool>> query);
 
         public Item GetItemByID(Guid id);
 

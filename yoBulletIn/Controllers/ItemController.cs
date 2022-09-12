@@ -15,7 +15,7 @@ namespace yoBulletIn.Controllers
     public class ItemController : Controller
     {
         private readonly IDbRepository _repo;
-        UserManager<User> _UserManager;
+        readonly UserManager<User> _UserManager;
 
         public ItemController(IDbRepository repo, UserManager<User> UserManager)
         {
