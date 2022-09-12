@@ -49,9 +49,9 @@ namespace yoBulletIn.Controllers
         }
 
         [HttpPost]
-        public IActionResult SaveRealEstate(RealEstate RE)
+        public IActionResult SaveRealEstate(RealEstate realEstate)
         {
-            _repo.SaveItem(RE);
+            _repo.SaveItem(realEstate);
             return RedirectToAction("Index", "Home");
         }
 

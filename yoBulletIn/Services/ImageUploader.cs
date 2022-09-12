@@ -5,18 +5,18 @@ using System.Linq;
 using System.Threading.Tasks;
 using Imagekit;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Configuration;
 
 namespace yoBulletIn.Services
 {
     public static class ImageUploader
     {
-
         public static ImagekitResponse UploadImage(IFormFile Image)
         {
             ServerImagekit imagekit = new ServerImagekit(
-            "public_Qenm/H4uTp0RTX8M+LjzrY+w9bU=",
-            "private_/Ny5I7r2cfO3hgVDM8x3SkiEu6c=",
-            "https://ik.imagekit.io/qghus62ew5",
+            Startup.Configuration.GetValue<string>("ImageUploader:PublicKey"),
+            Startup.Configuration.GetValue<string>("ImageUploader:PrivateKey"),
+            Startup.Configuration.GetValue<string>("ImageUploader:Endpoint"),
             "path");
 
             using (var ms = new MemoryStream())
