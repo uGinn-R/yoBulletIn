@@ -17,6 +17,8 @@ namespace yoBulletIn.Controllers
         private readonly ILogger<HomeController> _logger;
         private readonly IDbRepository _repo;
 
+        [BindProperty]
+        IEnumerable<ItemImages> ImagesList { get; set; }
         public HomeController(ILogger<HomeController> logger, IDbRepository repo)
         {
             _logger = logger;
@@ -24,15 +26,26 @@ namespace yoBulletIn.Controllers
         }
 
         public IActionResult Index()
-        {  
-            return View();
+        {
+            var LatestItems = _repo.GetAllItems().Where(s => s.Created > DateTime.Now.AddDays(-2)).ToList();
+
+            AttachImages(LatestItems);
+
+            return View(LatestItems);
         }
 
         [HttpGet]
         public async Task<IActionResult> Search(string query)
         {
             Expression<Func<Item, bool>> Query = x => x.Description.Contains(query) || x.Title.Contains(query);
-            return View("_SearchPartial" ,await _repo.FindItem(Query));
+            var result = await _repo.FindItem(Query);
+            if (result.Count < 1)
+            {
+                return View("Index");
+            }
+            AttachImages(result);
+            ViewData["Title"] = query;
+            return View("_SearchPartial", result);
         }
 
         public IActionResult Privacy()
@@ -44,6 +57,15 @@ namespace yoBulletIn.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+
+        public void AttachImages(List<Item> itemsList)
+        {
+            foreach (var item in itemsList)
+            {
+                ImagesList = _repo.GetAllItemImages(item.Id);
+                item.ImgPath = ImagesList.ToList();
+            }
         }
     }
 }

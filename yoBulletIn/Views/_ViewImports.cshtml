@@ -4,9 +4,11 @@
 @using yoBulletIn.Enums
 @using yoBulletIn.CustomComponents
 @using Microsoft.AspNetCore.Identity
+@using Microsoft.AspNetCore.Mvc.Localization
 @inject SignInManager<User> SignInManager
 @inject UserManager<User> UserManager
 @inject RoleManager<IdentityRole> RoleManager
+@inject IViewLocalizer localizer
 
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 @addTagHelper *, yoBulletIn

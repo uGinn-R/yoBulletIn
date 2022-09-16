@@ -3,9 +3,23 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-    
+<header class="py-2 bg-opacity-25 border-bottom mb-4">
+    <div class="container">
+        <div class="text-center my-5">
+            <h1 class="fw-bolder">yoBulletIn</h1>
+            <p class="lead mb-0">The right place for your ADs</p>
+        </div>
+    </div>
+</header>
+<div class="text-center my-5">
+    <p class="lead mb-0">Latest added ads:</p>
 </div>
+@if (Model.Count() == 0)
+{
+    <div class="text-center my-5">
+        <p class="lead mb-0">Oops! Looks like there is nothing to show...</p>
+    </div>
+}
+else
+@await Html.PartialAsync("ItemsGridView")
+

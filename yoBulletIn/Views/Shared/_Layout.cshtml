@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - yoBulletIn</title>
     @await Html.PartialAsync("_CssPartial")
+    @await Html.PartialAsync("_ScriptsPartial")
 </head>
 <body>
     <header>
@@ -40,7 +41,7 @@
             &copy; @DateTime.Now.Year - yoBulletIn - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
     </footer>
-    @await Html.PartialAsync("_ScriptsPartial")
+   
     @RenderSection("Scripts", required: false)
 </body>
 </html>

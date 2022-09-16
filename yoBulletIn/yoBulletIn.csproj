@@ -6,6 +6,17 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="bundleconfig.json" />
+    <Content Remove="wwwroot\js\myJSbundle.js" />
+    <Content Remove="wwwroot\js\myJSbundle.min.js" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <_ContentIncludedByDefault Remove="wwwroot\js\myJSbundle.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\js\myJSbundle.min.js" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Imagekit" Version="3.1.6" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.1.25" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="3.1.25" />
@@ -19,7 +30,16 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Resources\Entities\" />
+    <Folder Include="Resources\Views\Home\" />
+    <Folder Include="Resources\Views\Item\" />
     <Folder Include="wwwroot\images\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="bundleconfig.json" />
+    <None Include="wwwroot\js\myJSbundle.js" />
+    <None Include="wwwroot\js\myJSbundle.min.js" />
   </ItemGroup>
 
 </Project>

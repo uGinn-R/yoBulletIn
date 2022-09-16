@@ -12,6 +12,7 @@ namespace yoBulletIn.Entities
     {
         
         [Display(Name = "Model")]
+        [MaxLength(128)]
         public string Model { get; set; }
         private DateTime? _Year { get; set; } = null;
         [Display(Name = "Year")]

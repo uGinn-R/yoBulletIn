@@ -1,19 +1,52 @@
 ﻿@model IEnumerable<Item>
 @{
 }
-@foreach (var item in Model)
-{
-    <p>@item.Description</p>
-    <p>@item.Title</p>
-    foreach (var pi in item.GetType().GetProperties())
-    {
-        var res = pi.GetValue(item, null);
-        if (res != null && pi.Name != "Id")
-        {
-            <p>
-                <label>@pi.Name =  @pi.GetValue(item, null)</label>
-            </p>
-        }
-    }
-}
-<a>GENERATED: <current-time></current-time></a>
+<title>Search: @ViewData["Title"]</title>
+<div class="text-center my-5">
+    <p class="lead mb-0">Search results for "@ViewData["Title"]":</p>
+</div>
+
+@await Html.PartialAsync("ItemsGridView")
+
+<!--<div class="row">-->
+<!-- entries-->
+<!--<div class="col-lg-8">-->
+<!-- Nested cards-->
+<!--<div class="row">
+            <div class="col-lg-6">
+                @foreach (var item in Model)
+                {
+
+                <div class="card mb-4">
+                    @if (item.ImgPath != null)
+                    {
+                        <div class="fotorama">
+                            @foreach (var img in item.ImgPath)
+                            {
+                            <img class="card-img-top" src="@img.ItemImage">
+                            }
+
+                        </div>
+                    }
+                    <div class="card-body">
+
+                        <h2 class="card-title h4">@item.Title</h2>
+                        <p class="card-text">@item.Description</p>
+
+                        @foreach (var pi in item.GetType().GetProperties())
+                        {
+                            var res = pi.GetValue(item, null);
+                            if (res != null && pi.Name != "Id")
+                            {
+                                <p class="card-text">@pi.Name =  @pi.GetValue(item, null)</p>
+                            }
+                        }
+                        <a class="btn btn-primary" href="#!">Read more →</a>
+                    </div>
+                </div>
+                 }
+            </div>
+        </div>
+    </div>
+</div>-->
+

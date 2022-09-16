@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using yoBulletIn;
 
 namespace yoBulletIn.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220913102822_ItemImages_entity_added+corrections")]
+    partial class ItemImages_entity_addedcorrections
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -172,13 +174,9 @@ namespace yoBulletIn.Migrations
                     b.Property<string>("ItemOwner")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<decimal>("Price")
-                        .HasColumnType("decimal(18,2)");
-
                     b.Property<string>("Title")
                         .IsRequired()
-                        .HasColumnType("nvarchar(128)")
-                        .HasMaxLength(128);
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UserId")
                         .HasColumnType("nvarchar(450)");
@@ -202,8 +200,7 @@ namespace yoBulletIn.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("ItemImage")
-                        .HasColumnType("nvarchar(255)")
-                        .HasMaxLength(255);
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -294,8 +291,7 @@ namespace yoBulletIn.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Model")
-                        .HasColumnType("nvarchar(128)")
-                        .HasMaxLength(128);
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("Year")
                         .HasColumnType("datetime2");
@@ -310,8 +306,7 @@ namespace yoBulletIn.Migrations
                     b.HasBaseType("yoBulletIn.Entities.Item");
 
                     b.Property<string>("Brand")
-                        .HasColumnType("nvarchar(128)")
-                        .HasMaxLength(128);
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("Gender")
                         .HasColumnType("int");
@@ -334,8 +329,7 @@ namespace yoBulletIn.Migrations
 
                     b.Property<string>("Brand")
                         .HasColumnName("Electronics_Brand")
-                        .HasColumnType("nvarchar(128)")
-                        .HasMaxLength(128);
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<Guid?>("ItemId")
                         .HasColumnName("Electronics_ItemId")
@@ -343,8 +337,7 @@ namespace yoBulletIn.Migrations
 
                     b.Property<string>("Model")
                         .HasColumnName("Electronics_Model")
-                        .HasColumnType("nvarchar(128)")
-                        .HasMaxLength(128);
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("Portable")
                         .HasColumnType("bit");

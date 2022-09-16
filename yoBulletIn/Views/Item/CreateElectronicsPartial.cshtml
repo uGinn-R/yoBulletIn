@@ -1,10 +1,10 @@
-﻿@model RealEstate
+﻿@model Electronics
 @{
 }
 
 @if (Model.Category != null)
 {
-    if (Model.Category == ItemCategory.RealEstate)
+    if (Model.Category == ItemCategory.Electronics)
     {
         <script src="~/js/imgPreviewer.js"></script>
 
@@ -13,11 +13,12 @@
                 @Model.Category.Value -> Create new ad:
             </div>
             <div class="card-body">
-                <form method="post" asp-action="SaveRealEstate">
+                <form method="post" enctype="multipart/form-data" asp-action="SaveElectronics">
                     <input type="hidden" asp-for="@Model.Category" />
                     <input type="hidden" asp-for="@Model.ItemOwner" />
-                    <div class="form-group">
-                        <label asp-for="@Model.Title" class="col-sm-2 form-text col-form-label col-form-label-sm"></label>
+
+                    <div class="form-group ">
+                        <label asp-for="@Model.Title" for="colFormLabelSm" class="col-sm-2 col-form-label col-form-label-sm"></label>
                         <div class="col-sm-10">
                             <input type="text" asp-for="@Model.Title" class="form-control form-control-sm" required />
                         </div>
@@ -34,23 +35,30 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label asp-for="@Model.Area" class="col-sm-2 form-text col-form-label col-form-label-sm"></label>
+                        <label asp-for="@Model.Brand" class="col-sm-2 col-form-label col-form-label-sm"></label>
                         <div class="col-sm-10">
-                            <input type="text" asp-for="@Model.Area" class="form-control form-control-sm">
+                            <input type="text" asp-for="@Model.Brand" class="form-control form-control-sm">
                         </div>
                     </div>
                     <div class="form-group">
-                        <label asp-for="@Model.Floor" class="col-sm-2 form-text col-form-label col-form-label-sm"></label>
+                        <label asp-for="@Model.Model" for="colFormLabelSm" class="col-sm-2 col-form-label col-form-label-sm"></label>
                         <div class="col-sm-10">
-                            <input type="text" asp-for="@Model.Floor" class="form-control form-control-sm">
+                            <input type="text" asp-for="@Model.Model" class="form-control form-control-sm">
                         </div>
                     </div>
                     <div class="form-group">
-                        <label asp-for="@Model.NumberOfRooms" class="col-sm-2 form-text col-form-label col-form-label-sm"></label>
+                        <label asp-for="@Model.Portable" for="colFormLabelSm" class="col-sm-2 col-form-label col-form-label-sm"></label>
                         <div class="col-sm-10">
-                            <input type="text" asp-for="@Model.NumberOfRooms" class="form-control form-control-sm">
+                            <input asp-for="@Model.Portable" value="true" checked="@Model.Portable" class="form-check-input">
                         </div>
                     </div>
+                    <div class="form-group">
+                        <label asp-for="@Model.Price" for="colFormLabelSm" class="col-sm-2 col-form-label col-form-label-sm"></label>
+                        <div class="col-sm-10">
+                            <input type="number" asp-for="@Model.Price" class="form-control form-control-sm">
+                        </div>
+                    </div>
+
                     <div class="form-group">
                         <label>Upload images</label>
                         <div class="col-sm-10">
@@ -65,6 +73,7 @@
                             @Html.SubmitBtn("Submit")
                         </div>
                     </div>
+
                 </form>
             </div>
         </div>

@@ -1,0 +1,10 @@
+[
+  {
+    "outputFileName": "wwwroot/js/myJSbundle.js",
+    "inputFiles": [
+      "wwwroot/js/jquery.easyeditor.js",
+      "wwwroot/js/imgPreviewer.js",
+      "wwwroot/js/dataTable.js"
+    ]
+  }
+]

@@ -10,6 +10,7 @@ namespace yoBulletIn.Entities
     public class RealEstate : Item
     {
         [Display(Name = "Area, M2")]
+        
         public decimal Area { get; set; }
         [Display(Name = "Number of Rooms")]
         public int NumberOfRooms { get; set; }

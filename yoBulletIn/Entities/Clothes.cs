@@ -15,6 +15,7 @@ namespace yoBulletIn.Entities
         public decimal Size { get; set; }
 
         [Display(Name = "Brand")]
+        [MaxLength(128)]
         public string Brand { get; set; }
 
         public Gender? Gender { get; set; }

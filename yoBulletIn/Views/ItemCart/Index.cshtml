@@ -1,0 +1,71 @@
+﻿@model Item
+@{
+    var user = UserManager.FindByIdAsync(Model.ItemOwner);
+}
+<title>@Model.Title</title>
+<div class="container-fluid">
+    <div class="row">
+
+        <div class="col-lg-8">
+
+            <div class="card mb-4">
+                <div class="fotorama"
+                     data-allowfullscreen="true"
+                     data-nav="thumbs"
+                     data-maxheight="500">
+                    @if (Model.ImgPath == null || Model.ImgPath.Count == 0)
+                    {
+                        <a href="#!"><img class="card-img-top" src="~/images/no_image.png"></a>
+                    }
+                    else
+                        @foreach (var img in Model.ImgPath)
+                        {
+                            <a href="#!"><img class="card-img-top" src="@img.ItemImage"></a>
+                        }
+                </div>
+
+            </div>
+
+            <div class="card mb-4">
+                <div class="card-body">
+                    <div class="small text-muted">@Model.Created.ToShortDateString()</div>
+                    <h2 class="card-title">@Model.Title</h2>
+                    <p class="card-text">@Html.Raw(Model.Description)</p>
+                    @*<a class="btn btn-primary" href="#!">Read more →</a>*@
+                </div>
+            </div>
+
+
+        </div>
+        <!-- Side widgets-->
+        <div class="col-lg-4">
+
+            <!-- ad owner info widget-->
+            <div class="card mb-4">
+                <div class="card-header"><i class="fas fa-address-card"></i> @localizer["About_seller"]:</div>
+                <div class="card-body">
+                    <div class="row">
+
+                        <div class="col-sm-6">
+                            <ul class="list-unstyled mb-0">
+                                <li><i class="fas fa-user"></i> @user.Result.UserName</li>
+                                <li><a href="#!">opt 2</a></li>
+                                <li><a href="#!">opt 3</a></li>
+                                @if (SignInManager.IsSignedIn(User))
+                                {
+                                    <li><a href="#!"><i class="fas fa-envelope"></i> Send message</a></li>
+                                }
+                            </ul>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <!-- Side widget-->
+            <div class="card mb-4">
+                <div class="card-header">Side Widget 2</div>
+                <div class="card-body">SOME CONTENT HERE</div>
+            </div>
+        </div>
+    </div>
+</div>

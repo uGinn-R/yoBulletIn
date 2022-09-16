@@ -11,6 +11,7 @@ namespace yoBulletIn.Services
     public class DbRepository : IDbRepository
     {
         public readonly AppDbContext _context;
+        IEnumerable<ItemImages> ImagesList { get; set; }
 
         public DbRepository(AppDbContext context)
         {
@@ -19,8 +20,10 @@ namespace yoBulletIn.Services
 
 
         public Item GetItemByID(Guid id)
-        {
-            return _context.Items.FirstOrDefault(x => x.Id == id);
+        {   var model = _context.Items.FirstOrDefault(x => x.Id == id);
+            ImagesList = GetAllItemImages(id);
+            model.ImgPath = ImagesList.ToList();
+            return model;
         }
 
 
@@ -30,6 +33,15 @@ namespace yoBulletIn.Services
                 _context.Entry(item).State = EntityState.Added;
             else
                 _context.Entry(item).State = EntityState.Modified;
+            _context.SaveChanges();
+        }
+
+        public void SaveItemImage(ItemImages itemImage)
+        {
+            if (itemImage.Id == default)
+                _context.Entry(itemImage).State = EntityState.Added;
+            else
+                _context.Entry(itemImage).State = EntityState.Modified;
             _context.SaveChanges();
         }
 
@@ -52,6 +64,21 @@ namespace yoBulletIn.Services
         public async Task<List<Item>> FindItem(Expression<Func<Item, bool>> query)
         {
                 return await _context.Items.Where(query).Select(x => x).ToListAsync();
+        }
+
+        public IEnumerable<ItemImages> GetAllItemImages(Guid Id)
+        {
+            return _context.ItemImages.Where(x => x.Item.Id == Id).ToList();
+        }
+
+        public IEnumerable<Item> GetPaginatedItems(int Count, int Page = 1)
+        {
+            if (Page == 1)
+            {
+                return _context.Items.Take(Count).ToList();
+            }
+            else
+            return _context.Items.Skip(Page-1 * Count).Take(Count).ToList();
         }
     }
 }

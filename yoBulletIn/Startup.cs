@@ -15,6 +15,8 @@ using yoBulletIn.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI;
 using Microsoft.AspNetCore.Identity.UI.Services;
+using System.Globalization;
+using Microsoft.AspNetCore.Localization;
 
 namespace yoBulletIn
 {
@@ -30,15 +32,19 @@ namespace yoBulletIn
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddLocalization(options =>
+            options.ResourcesPath = "Resources");
+
             services.AddControllersWithViews()
-                .SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
+                .SetCompatibilityVersion(CompatibilityVersion.Version_3_0)
+                .AddViewLocalization();
+
+            services.AddRazorPages();
 
             services.AddTransient<IDbRepository, DbRepository>();
             
             services.AddDbContext<AppDbContext>
                 (x => x.UseSqlServer(Configuration.GetConnectionString("SQLBulletin")));
-
-            services.AddRazorPages();
 
             services.AddIdentity<User, IdentityRole>(options =>
             {
@@ -83,10 +89,26 @@ namespace yoBulletIn
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+
+            var supportedCultures = new[]
+            {
+                new CultureInfo("en"),
+                new CultureInfo("ua")
+            };
+
+            app.UseRequestLocalization(new RequestLocalizationOptions
+            {
+                DefaultRequestCulture = new RequestCulture("en"),
+                SupportedCultures = supportedCultures,
+                SupportedUICultures = supportedCultures
+            }); ;
+
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
             app.UseRouting();
+
+            
 
             app.UseSession();
 

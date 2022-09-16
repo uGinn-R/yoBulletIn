@@ -14,17 +14,24 @@ namespace yoBulletIn.Entities
         }
 
         [Required]
+        [Key]
         public Guid Id { get; set; }
 
         [Required(ErrorMessage = "Name field can't be empty")]
         [Display(Name = "Title (Name)")]
-        public virtual string Title { get; set; }
+        [MaxLength(128)]
+        public virtual string Title { get; set; } = string.Empty;
 
         [Display(Name = "Description")]
-        public virtual string Description { get; set; }
+        public virtual string Description { get; set; } = string.Empty;
 
-        [Display(Name = "Image")]
-        public virtual string ImgPath { get; set; }
+        [Display(Name = "Images")]
+        public virtual List<ItemImages> ImgPath { get; set; }
+
+        [Display(Name = "Price")]
+        [DataType(DataType.Currency)]
+        [Required]
+        public virtual decimal Price { get; set; }
 
         [DataType(DataType.DateTime)]
         public DateTime Created { get; set; }

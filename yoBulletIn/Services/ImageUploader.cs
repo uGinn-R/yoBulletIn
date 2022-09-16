@@ -11,22 +11,28 @@ namespace yoBulletIn.Services
 {
     public static class ImageUploader
     {
-        public static ImagekitResponse UploadImage(IFormFile Image)
+        public static List<ImagekitResponse> UploadImage(List<IFormFile> Image)
         {
-            ServerImagekit imagekit = new ServerImagekit(
+         ServerImagekit imagekit = new ServerImagekit(
             Startup.Configuration.GetValue<string>("ImageUploader:PublicKey"),
             Startup.Configuration.GetValue<string>("ImageUploader:PrivateKey"),
             Startup.Configuration.GetValue<string>("ImageUploader:Endpoint"),
-            "path");
+         "path");
 
-            using (var ms = new MemoryStream())
+            List<ImagekitResponse> responses = new List<ImagekitResponse>();
+
+            foreach (var image in Image)
             {
-                Image.CopyTo(ms);
-                var fileBytes = ms.ToArray();
-                var uploadResp = imagekit.FileName(Image.FileName).Upload(fileBytes);
+                using (var ms = new MemoryStream())
+                {
+                    image.CopyTo(ms);
+                    var fileBytes = ms.ToArray();
+                    var uploadResp = imagekit.FileName(image.FileName).Upload(fileBytes);
 
-                return uploadResp;
+                    responses.Add(uploadResp);
+                }
             }
+            return responses;
         }
     }
 }

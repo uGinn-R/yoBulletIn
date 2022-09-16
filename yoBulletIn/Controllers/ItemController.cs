@@ -39,43 +39,112 @@ namespace yoBulletIn.Controllers
         {
             return item.Category switch
             {
-                ItemCategory.RealEstate => View("CreateRealEstatePartial", new RealEstate() { Category = ItemCategory.RealEstate }),
-                ItemCategory.Cars => View("CreateCarsPartial", new Car() { Category = ItemCategory.Cars }),
-                ItemCategory.Electronics => View("CreateElectronicsPartial", new Electronics() { Category = ItemCategory.Electronics }),
-                ItemCategory.Clothes => View("CreateClothesPartial", new Clothes() { Category = ItemCategory.Clothes }),
-                ItemCategory.Other => View("CreateOtherPartial", new Item() { Category = ItemCategory.Other }),
+                ItemCategory.RealEstate => View("CreateRealEstatePartial", new RealEstate() { Category = ItemCategory.RealEstate, ItemOwner = _UserManager.GetUserId(User) }),
+                ItemCategory.Cars => View("CreateCarsPartial", new Car() { Category = ItemCategory.Cars, ItemOwner = _UserManager.GetUserId(User) }),
+                ItemCategory.Electronics => View("CreateElectronicsPartial", new Electronics() { Category = ItemCategory.Electronics, ItemOwner = _UserManager.GetUserId(User) }),
+                ItemCategory.Clothes => View("CreateClothesPartial", new Clothes() { Category = ItemCategory.Clothes, ItemOwner = _UserManager.GetUserId(User) }),
+                ItemCategory.Other => View("CreateOtherPartial", new Item() { Category = ItemCategory.Other, ItemOwner = _UserManager.GetUserId(User) }),
                 _ => View(),
             };
         }
 
         [HttpPost]
-        public IActionResult SaveRealEstate(RealEstate realEstate)
+        public IActionResult SaveRealEstate(RealEstate realEstate, List<IFormFile> Image)
         {
+            if (!ModelState.IsValid)
+            {
+                return View("CreateRealEstatePartial", realEstate);
+            }
+
+            if (Image.Count > 0)
+            {
+                var responses = ImageUploader.UploadImage(Image);
+                foreach (var response in responses)
+                {
+                    if (response.StatusCode == 200) // OK
+                    {
+                        _repo.SaveItemImage(new ItemImages { ItemImage = response.URL, Item = realEstate });
+                    }
+                }
+            }
+
             _repo.SaveItem(realEstate);
             return RedirectToAction("Index", "Home");
         }
 
         [HttpPost]
-        public IActionResult SaveClothes(Clothes clothes)
+        public IActionResult SaveClothes(Clothes clothes, List<IFormFile> Image)
         {
+            if (!ModelState.IsValid)
+            {
+                return View("CreateClothesPartial", clothes);
+            }
+
+            if (Image.Count > 0)
+            {
+                var responses = ImageUploader.UploadImage(Image);
+                foreach (var response in responses)
+                {
+                    if (response.StatusCode == 200) // OK
+                    {
+                        _repo.SaveItemImage(new ItemImages { ItemImage = response.URL, Item = clothes });
+                    }
+                }
+            }
+
             _repo.SaveItem(clothes);
             return RedirectToAction("Index", "Home");
         }
 
         [HttpPost]
-        public IActionResult SaveCars(Car car, IFormFile Image)
+        public IActionResult SaveElectronics(Electronics electronics, List<IFormFile> Image)
         {
-            car.ItemOwner = _UserManager.GetUserId(User);
-            if (Image != null)
+            if (!ModelState.IsValid)
             {
-                var response = ImageUploader.UploadImage(Image);
-                if (response.StatusCode == 200) // OK
+                return View("CreateElectronicsPartial", electronics);
+            }
+
+            if (Image.Count > 0)
+            {
+                var responses = ImageUploader.UploadImage(Image);
+                foreach (var response in responses)
                 {
-                    car.ImgPath = response.URL;
+                    if (response.StatusCode == 200) // OK
+                    {
+                        _repo.SaveItemImage(new ItemImages { ItemImage = response.URL, Item = electronics });
+                    }
                 }
             }
-            _repo.SaveItem(car);
+
+            _repo.SaveItem(electronics);
             return RedirectToAction("Index", "Home");
         }
+
+        [HttpPost]
+        public IActionResult SaveCars(Car car, List<IFormFile> Image)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View("CreateCarsPartial",car);
+            }
+
+            //car.ItemOwner = _UserManager.GetUserId(User);
+            if (Image.Count > 0)
+            {
+                var responses = ImageUploader.UploadImage(Image);
+                foreach (var response in responses)
+                {
+                    if (response.StatusCode == 200) // OK
+                    {
+                        _repo.SaveItemImage(new ItemImages { ItemImage = response.URL, Item = car });
+                    }
+                }
+            }
+            
+            _repo.SaveItem(car);
+            
+            return RedirectToAction("Index", "Home");
+        }
+
     }
 }
