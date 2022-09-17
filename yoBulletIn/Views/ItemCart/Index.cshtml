@@ -54,7 +54,11 @@
                                 @if (SignInManager.IsSignedIn(User))
                                 {
                                     <li><a href="#!"><i class="fas fa-envelope"></i> Send message</a></li>
-                                }
+                                    if (Model.ItemOwner == UserManager.GetUserId(User))
+                                    {
+                                        <a asp-controller="Item" asp-action="Edit" asp-route-id="@Model.Id">EDIT</a>
+                                    }
+                                } 
                             </ul>
                         </div>
 

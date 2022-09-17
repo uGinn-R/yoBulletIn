@@ -16,6 +16,7 @@
                 <form method="post" enctype="multipart/form-data" asp-action="SaveElectronics">
                     <input type="hidden" asp-for="@Model.Category" />
                     <input type="hidden" asp-for="@Model.ItemOwner" />
+                    <input type="hidden" asp-for="@Model.Id" />
 
                     <div class="form-group ">
                         <label asp-for="@Model.Title" for="colFormLabelSm" class="col-sm-2 col-form-label col-form-label-sm"></label>

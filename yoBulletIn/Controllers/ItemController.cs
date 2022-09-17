@@ -34,8 +34,22 @@ namespace yoBulletIn.Controllers
             return View();
         }
 
-        [HttpPost]
+        [HttpGet]
+        public IActionResult Edit(Guid id)
+        {
+            var item = _repo.GetItemByID(id);
+            return item.Category switch
+            {
+                ItemCategory.RealEstate => View("CreateRealEstatePartial", item),
+                ItemCategory.Cars => View("CreateCarsPartial", item),
+                ItemCategory.Electronics => View("CreateElectronicsPartial", item),
+                ItemCategory.Clothes => View("CreateClothesPartial", item),
+                ItemCategory.Other => View("CreateOtherPartial", item),
+                _ => View(),
+            };
+        }
 
+            [HttpPost]
         public IActionResult Create(Item item)
         {
             return item.Category switch

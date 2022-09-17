@@ -16,6 +16,7 @@
                 <form method="post" asp-action="SaveRealEstate">
                     <input type="hidden" asp-for="@Model.Category" />
                     <input type="hidden" asp-for="@Model.ItemOwner" />
+                    <input type="hidden" asp-for="@Model.Id" />
                     <div class="form-group">
                         <label asp-for="@Model.Title" class="col-sm-2 form-text col-form-label col-form-label-sm"></label>
                         <div class="col-sm-10">
