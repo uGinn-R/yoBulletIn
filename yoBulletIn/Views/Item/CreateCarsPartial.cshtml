@@ -23,8 +23,8 @@
                     <div class="form-group">
                         <label asp-for="@Model.Title" for="colFormLabelSm" class="col-sm-2 col-form-label col-form-label-sm"></label>
                         <div class="col-sm-10">
-                            <input type="text" asp-for="@Model.Title" class="form-control form-control-sm" required />
-                            <span asp-validation-for="@Model.Title"></span>
+                            <input type="text" asp-for="@Model.Title" class="form-control form-control-sm" />
+                            @Html.ValidationMessageFor(model => model.Title)
                         </div>
                     </div>
                     <div class="form-group">

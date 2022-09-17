@@ -74,6 +74,12 @@ namespace yoBulletIn
                 options.Cookie.IsEssential = true;
 
                 });
+
+            services.AddAuthentication().AddGoogle(googleOptions =>
+            {
+                googleOptions.ClientId = Configuration["GoogleOAuth:client_id"];
+                googleOptions.ClientSecret = Configuration["GoogleOAuth:client_secret"];
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace yoBulletIn.Controllers
 {
+    [Authorize]
     public class ItemController : Controller
     {
         private readonly IDbRepository _repo;
@@ -39,11 +40,11 @@ namespace yoBulletIn.Controllers
         {
             return item.Category switch
             {
-                ItemCategory.RealEstate => View("CreateRealEstatePartial", new RealEstate() { Category = ItemCategory.RealEstate, ItemOwner = _UserManager.GetUserId(User) }),
-                ItemCategory.Cars => View("CreateCarsPartial", new Car() { Category = ItemCategory.Cars, ItemOwner = _UserManager.GetUserId(User) }),
-                ItemCategory.Electronics => View("CreateElectronicsPartial", new Electronics() { Category = ItemCategory.Electronics, ItemOwner = _UserManager.GetUserId(User) }),
-                ItemCategory.Clothes => View("CreateClothesPartial", new Clothes() { Category = ItemCategory.Clothes, ItemOwner = _UserManager.GetUserId(User) }),
-                ItemCategory.Other => View("CreateOtherPartial", new Item() { Category = ItemCategory.Other, ItemOwner = _UserManager.GetUserId(User) }),
+                ItemCategory.RealEstate => View("CreateRealEstatePartial", new RealEstate() { Category = ItemCategory.RealEstate}),
+                ItemCategory.Cars => View("CreateCarsPartial", new Car() { Category = ItemCategory.Cars}),
+                ItemCategory.Electronics => View("CreateElectronicsPartial", new Electronics() { Category = ItemCategory.Electronics}),
+                ItemCategory.Clothes => View("CreateClothesPartial", new Clothes() { Category = ItemCategory.Clothes}),
+                ItemCategory.Other => View("CreateOtherPartial", new Item() { Category = ItemCategory.Other}),
                 _ => View(),
             };
         }
