@@ -53,10 +53,10 @@
                                 <li><a href="#!">opt 3</a></li>
                                 @if (SignInManager.IsSignedIn(User))
                                 {
-                                    <li><a href="#!"><i class="fas fa-envelope"></i> Send message</a></li>
+                                    <li><a href="#!"><i class="fas fa-envelope"></i> @localizer["Message"]</a></li>
                                     if (Model.ItemOwner == UserManager.GetUserId(User))
                                     {
-                                        <a asp-controller="Item" asp-action="Edit" asp-route-id="@Model.Id">EDIT</a>
+                                        <li><a asp-controller="Item" asp-action="Edit" asp-route-id="@Model.Id"><i class="fas fa-edit"></i> @localizer["Edit"]</a></li>
                                     }
                                 } 
                             </ul>

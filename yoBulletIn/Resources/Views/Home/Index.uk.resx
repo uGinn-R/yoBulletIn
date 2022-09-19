@@ -117,7 +117,16 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="string" xml:space="preserve">
-    <value>value</value>
+  <data name="Home Page" xml:space="preserve">
+    <value>Головна сторінка</value>
+  </data>
+  <data name="Latest" xml:space="preserve">
+    <value>Останні додані оголошення</value>
+  </data>
+  <data name="ResultIsEmpty" xml:space="preserve">
+    <value>Здається немає нічого нового...</value>
+  </data>
+  <data name="Slogan" xml:space="preserve">
+    <value>Вірне місце для твоїх оголошень</value>
   </data>
 </root>

@@ -120,4 +120,10 @@
   <data name="About_seller" xml:space="preserve">
     <value>Про продавця</value>
   </data>
+  <data name="Edit" xml:space="preserve">
+    <value>Редагувати</value>
+  </data>
+  <data name="Message" xml:space="preserve">
+    <value>Повідомлення</value>
+  </data>
 </root>

@@ -120,4 +120,10 @@
   <data name="About_seller" xml:space="preserve">
     <value>About seller</value>
   </data>
+  <data name="Edit" xml:space="preserve">
+    <value>Edit</value>
+  </data>
+  <data name="Message" xml:space="preserve">
+    <value>Message</value>
+  </data>
 </root>
