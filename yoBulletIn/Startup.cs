@@ -35,7 +35,20 @@ namespace yoBulletIn
             services.AddLocalization(options =>
             options.ResourcesPath = "Resources");
 
-            services.AddControllersWithViews()
+            services.Configure<RequestLocalizationOptions>(options =>
+            {
+                var supportedCultures = new[]
+                {
+                    new CultureInfo("en"),
+                    new CultureInfo("uk")
+                };
+
+                options.DefaultRequestCulture = new RequestCulture("en");
+                options.SupportedCultures = supportedCultures;
+                options.SupportedUICultures = supportedCultures;
+            });
+
+        services.AddControllersWithViews()
                 .SetCompatibilityVersion(CompatibilityVersion.Version_3_0)
                 .AddViewLocalization();
 
@@ -96,18 +109,7 @@ namespace yoBulletIn
                 app.UseHsts();
             }
 
-            var supportedCultures = new[]
-            {
-                new CultureInfo("en"),
-                new CultureInfo("ua")
-            };
-
-            app.UseRequestLocalization(new RequestLocalizationOptions
-            {
-                DefaultRequestCulture = new RequestCulture("en"),
-                SupportedCultures = supportedCultures,
-                SupportedUICultures = supportedCultures
-            }); ;
+            app.UseRequestLocalization();
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();

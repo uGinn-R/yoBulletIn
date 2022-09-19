@@ -49,7 +49,7 @@ namespace yoBulletIn.Controllers
             };
         }
 
-            [HttpPost]
+        [HttpPost]
         public IActionResult Create(Item item)
         {
             return item.Category switch

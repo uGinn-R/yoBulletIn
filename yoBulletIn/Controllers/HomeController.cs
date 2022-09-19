@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Localization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -38,6 +40,7 @@ namespace yoBulletIn.Controllers
         public async Task<IActionResult> Search(string query)
         {
             Expression<Func<Item, bool>> Query = x => x.Description.Contains(query) || x.Title.Contains(query);
+
             var result = await _repo.FindItem(Query);
             if (result.Count < 1)
             {
@@ -57,6 +60,18 @@ namespace yoBulletIn.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+
+        
+        public IActionResult SetLanguage(string culture, string returnUrl)
+        {
+            Response.Cookies.Append(
+                CookieRequestCultureProvider.DefaultCookieName,
+                CookieRequestCultureProvider.MakeCookieValue(new RequestCulture(culture)),
+                new CookieOptions { Expires = DateTimeOffset.UtcNow.AddDays(1) }
+            );
+
+            return LocalRedirect(returnUrl);
         }
 
         public void AttachImages(List<Item> itemsList)
