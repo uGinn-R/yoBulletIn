@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,10 +13,12 @@ namespace yoBulletIn.Services
     {
         public readonly AppDbContext _context;
         IEnumerable<ItemImages> ImagesList { get; set; }
+        private readonly UserManager<User> _UserManager;
 
-        public DbRepository(AppDbContext context)
+        public DbRepository(AppDbContext context , UserManager<User> UserManager)
         {
             _context = context;
+            _UserManager = UserManager;
         }
 
 
@@ -45,6 +48,15 @@ namespace yoBulletIn.Services
             _context.SaveChanges();
         }
 
+        public void SavePM(PM message)
+        {
+            if (message.Id == default)
+                _context.Entry(message).State = EntityState.Added;
+            else
+                _context.Entry(message).State = EntityState.Modified;
+            _context.SaveChanges();
+        }
+
         public void DeleteItem(Guid id)
         {
             _context.Items.Remove(new Item { Id = id});
@@ -56,9 +68,14 @@ namespace yoBulletIn.Services
             return _context.Items.ToList();
         }
 
-        public IEnumerable<Item> GetMyItems(User user)
+        public IEnumerable<Item> GetMyItems(string userId)
         {
-            return _context.Items.Where(x => x.ItemOwner == user.Id).ToList();
+            var ADs = _context.Items.Where(x => x.ItemOwner == userId).ToList();
+            foreach (var ad in ADs)
+            {
+                ad.ImgPath = GetAllItemImages(ad.Id);
+            }
+            return ADs;
         }
 
         public async Task<List<Item>> FindItem(Expression<Func<Item, bool>> query)
@@ -66,7 +83,7 @@ namespace yoBulletIn.Services
                 return await _context.Items.Where(query).Select(x => x).ToListAsync();
         }
 
-        public IEnumerable<ItemImages> GetAllItemImages(Guid Id)
+        public List<ItemImages> GetAllItemImages(Guid Id)
         {
             return _context.ItemImages.Where(x => x.Item.Id == Id).ToList();
         }
@@ -79,6 +96,11 @@ namespace yoBulletIn.Services
             }
             else
             return _context.Items.Skip(Page-1 * Count).Take(Count).ToList();
+        }
+
+        public IEnumerable<PM> GetMessagesByItemId(Guid ID)
+        {
+            return _context.PMs.Where(x => x.ItemId == ID).ToList();
         }
     }
 }

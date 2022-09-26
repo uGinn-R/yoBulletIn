@@ -27,5 +27,18 @@ namespace yoBulletIn.Controllers
 
             return View(CurrentItem);
         }
+
+        [HttpPost]
+        public void AddComment(string user ,string message, Guid ItemId)
+        {
+            PM pm = new PM()
+            {
+                Message = message,
+                ItemId = ItemId,
+                MessageAuthor = user
+            };
+            
+            _repo.SavePM(pm);
+        }
     }
 }

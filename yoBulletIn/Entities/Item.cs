@@ -19,5 +19,6 @@ namespace yoBulletIn.Entities
         //public IEnumerable<Clothes> ClothesItems { get; set; }
         //public IEnumerable<Car> CarsItems { get; set; }
         //public IEnumerable<Electronics> ElectronicsItems { get; set; }
+        //public IEnumerable<PM> Messages { get; set; }
     }
 }

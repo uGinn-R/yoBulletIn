@@ -29,6 +29,7 @@ namespace yoBulletIn.Controllers
 
         public IActionResult Index()
         {
+            var ipAddress = HttpContext.Connection.RemoteIpAddress.ToString();
             var LatestItems = _repo.GetAllItems().Where(s => s.Created > DateTime.Now.AddDays(-2)).ToList();
 
             AttachImages(LatestItems);

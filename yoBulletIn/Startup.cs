@@ -35,6 +35,8 @@ namespace yoBulletIn
             services.AddLocalization(options =>
             options.ResourcesPath = "Resources");
 
+            services.AddSignalR();
+
             services.Configure<RequestLocalizationOptions>(options =>
             {
                 var supportedCultures = new[]
@@ -53,6 +55,7 @@ namespace yoBulletIn
                 .AddViewLocalization();
 
             services.AddRazorPages();
+           
 
             services.AddTransient<IDbRepository, DbRepository>();
             
@@ -93,6 +96,7 @@ namespace yoBulletIn
                 googleOptions.ClientId = Configuration["GoogleOAuth:client_id"];
                 googleOptions.ClientSecret = Configuration["GoogleOAuth:client_secret"];
             });
+            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -116,8 +120,6 @@ namespace yoBulletIn
 
             app.UseRouting();
 
-            
-
             app.UseSession();
 
             app.UseCookiePolicy();
@@ -130,6 +132,7 @@ namespace yoBulletIn
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
                 endpoints.MapRazorPages();
+                endpoints.MapHub<ChatHub>("/chatHub");
             });
         }
     }

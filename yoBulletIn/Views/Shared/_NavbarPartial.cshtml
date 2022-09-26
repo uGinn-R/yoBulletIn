@@ -12,26 +12,29 @@
                         Home
                         <span class="visually-hidden">(current)</span>
                     </a>
-
-                
-                    @{
-                        if (SignInManager.IsSignedIn(User))
-                        {
-                        <li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-controller="Item" asp-action="CreateItem">Create ad</a>
-                        </li>
-                        }
-                    }
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">LANGUAGE</a>
-                    <div class="dropdown-menu">
-                        <a class="dropdown-item" asp-controller="Home" asp-action="SetLanguage" asp-route-culture="en" asp-route-returnUrl="@Context.Request.Path">English</a>
-                        <a class="dropdown-item" asp-controller="Home" asp-action="SetLanguage" asp-route-culture="uk" asp-route-returnUrl="@Context.Request.Path">Ukrainian</a>
-                    </div>
                 </li>
-            </ul>
 
-         
+                @if (SignInManager.IsSignedIn(User))
+                {
+                    <li class="nav-item">
+                        <a class="nav-link" asp-area="" asp-controller="Item" asp-action="CreateItem">Create ad</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" asp-controller="UserProfile" asp-action="Index">Profile</a>
+                    </li>
+                 }
+
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">LANGUAGE</a>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item" asp-controller="Home" asp-action="SetLanguage" asp-route-culture="en" asp-route-returnUrl="@Context.Request.Path">English</a>
+                            <a class="dropdown-item" asp-controller="Home" asp-action="SetLanguage" asp-route-culture="uk" asp-route-returnUrl="@Context.Request.Path">Ukrainian</a>
+                        </div>
+                    </li>
+                </ul>
+
+
 
             <partial name="_LoginPartial" />
 

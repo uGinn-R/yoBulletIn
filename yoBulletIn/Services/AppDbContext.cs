@@ -21,5 +21,6 @@ namespace yoBulletIn
         public DbSet<Electronics> Electronics { get; set; }
         public DbSet<Car> Cars { get; set; }
         public DbSet<ItemImages> ItemImages { get; set; }
+        public DbSet<PM> PMs { get; set; }
     }
 }
