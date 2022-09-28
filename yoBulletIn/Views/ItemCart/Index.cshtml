@@ -78,7 +78,7 @@
                                             <input type="hidden" id="currentUserID" value="@UserManager.GetUserId(User)" />
                                             <input type="hidden" id="itemOwner" value="@Model.ItemOwner" />
                                             <input type="hidden" id="itemId" value="@Model.Id" />
-                                            <script type="text/javascript" src="~/js/chat.js"></script>
+                                            <script type="text/javascript" src="~/js/pmHandler.js"></script>
                                         </div>
                                     </div>
                                 </div>
@@ -98,9 +98,7 @@
                             <h2 class="accordion-header" id="headingTwo">
                                 <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
                                     MESSAGES
-                                    <span style="visibility:hidden" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" id="badgeCounter">
-                                        0
-                                    </span>
+                                  
                                 </button>
                             </h2>
                             <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordion2">

@@ -7,13 +7,10 @@ document.getElementById("sendButton").disabled = true;
 
 connection.on("ReceiveMessage", function (user, message, itemId) {
     var li = document.createElement("li");
-    document.getElementById("messageInput").value = '';
 
     var thisItemId = document.getElementById("itemId").value;
     var commentsList = document.getElementById("messagesList");
-    var currentUserID = document.getElementById("currentUserID").value;
-    var itemOwner = document.getElementById("itemOwner").value;
-    if (itemId == thisItemId && itemOwner == currentUserID) {
+    if (itemId == thisItemId) {
             commentsList.appendChild(li);
             li.textContent = `${user}: ${ message }`;
             
@@ -27,7 +24,7 @@ connection.on("ReceiveMessage", function (user, message, itemId) {
             if (badgeCounterSpan.innerHTML > 0) {
                 badgeCounterSpan.style.visibility = "visible";
             }
-    }  
+    }
 });
 
 connection.start().then(function () {
@@ -41,6 +38,7 @@ document.getElementById("sendButton").addEventListener("click", function (event)
     var user = document.getElementById("userInput").value;
     var message = document.getElementById("messageInput").value;
     var itemId = document.getElementById("itemId").value;
+    var itemOwner = document.getElementById("itemOwner").value;
 
     // adding message to the DB
     $.ajax({
@@ -49,7 +47,9 @@ document.getElementById("sendButton").addEventListener("click", function (event)
         data: { "ItemId": itemId, "message": message, "user": user }
     });
 
-    connection.invoke("SendMessage", user, message, itemId).catch(function (err) {
+    document.getElementById("messageInput").value = '';
+
+    connection.invoke("SendMessage", user, itemOwner, message, itemId).catch(function (err) {
         return console.error(err.toString());
     });
     event.preventDefault();

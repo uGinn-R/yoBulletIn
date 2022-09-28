@@ -22,6 +22,9 @@
 
                     <li class="nav-item">
                         <a class="nav-link" asp-controller="UserProfile" asp-action="Index">Profile</a>
+                        <span style="visibility:hidden" class="badge rounded-pill bg-danger" id="badgeCounter">
+                            0
+                        </span>
                     </li>
                  }
 
@@ -33,11 +36,7 @@
                         </div>
                     </li>
                 </ul>
-
-
-
             <partial name="_LoginPartial" />
-
             <form class="d-flex" method="get" asp-controller="Home" asp-action="Search">
                 <input class="form-control me-sm-2" type="text" name="query" placeholder="Search">
                 <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>

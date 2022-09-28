@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -25,7 +26,24 @@ namespace yoBulletIn.Controllers
         public IActionResult Index()
         {
             var myAds = _repo.GetMyItems(_UserManager.GetUserId(User));
-            return View();
+            var thisUser = _UserManager.GetUserAsync(User);
+            return View(thisUser.Result);
+        }
+
+        public async Task<IActionResult> UploadAvatar(IFormFile Image)
+        {
+            if (Image != null)
+            {
+                var response = ImageUploader.UploadAvatarImage(Image);
+                    if (response.StatusCode == 200) // OK
+                    {
+                        var currentUser = await _UserManager.GetUserAsync(User);
+                        currentUser.AvatarImg = response.URL;
+                        await _UserManager.UpdateAsync(currentUser);
+                        return View();
+                    }
+            }
+            return RedirectToPage("UserProfile");
         }
     }
 }

@@ -13,12 +13,12 @@ namespace yoBulletIn.Services
     {
         public readonly AppDbContext _context;
         IEnumerable<ItemImages> ImagesList { get; set; }
-        private readonly UserManager<User> _UserManager;
+        
 
-        public DbRepository(AppDbContext context , UserManager<User> UserManager)
+        public DbRepository(AppDbContext context)
         {
             _context = context;
-            _UserManager = UserManager;
+            
         }
 
 
@@ -102,5 +102,6 @@ namespace yoBulletIn.Services
         {
             return _context.PMs.Where(x => x.ItemId == ID).ToList();
         }
+
     }
 }

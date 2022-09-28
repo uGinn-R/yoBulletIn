@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Imagekit;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
+using yoBulletIn.Entities;
 
 namespace yoBulletIn.Services
 {
@@ -13,11 +14,11 @@ namespace yoBulletIn.Services
     {
         public static List<ImagekitResponse> UploadImage(List<IFormFile> Image)
         {
-         ServerImagekit imagekit = new ServerImagekit(
-            Startup.Configuration.GetValue<string>("ImageUploader:PublicKey"),
-            Startup.Configuration.GetValue<string>("ImageUploader:PrivateKey"),
-            Startup.Configuration.GetValue<string>("ImageUploader:Endpoint"),
-         "path");
+            ServerImagekit imagekit = new ServerImagekit(
+               Startup.Configuration.GetValue<string>("ImageUploader:PublicKey"),
+               Startup.Configuration.GetValue<string>("ImageUploader:PrivateKey"),
+               Startup.Configuration.GetValue<string>("ImageUploader:Endpoint"),
+            "path");
 
             List<ImagekitResponse> responses = new List<ImagekitResponse>();
 
@@ -34,5 +35,23 @@ namespace yoBulletIn.Services
             }
             return responses;
         }
+
+        public static ImagekitResponse UploadAvatarImage(IFormFile Image)
+        {
+            ServerImagekit imagekit = new ServerImagekit(
+               Startup.Configuration.GetValue<string>("ImageUploader:PublicKey"),
+               Startup.Configuration.GetValue<string>("ImageUploader:PrivateKey"),
+               Startup.Configuration.GetValue<string>("ImageUploader:Endpoint"),
+            "path");
+
+            using (var ms = new MemoryStream())
+            {
+                Image.CopyTo(ms);
+                var fileBytes = ms.ToArray();
+                var uploadResp = imagekit.FileName(Image.FileName).Upload(fileBytes);
+                return uploadResp;
+            }
+        }
+
     }
 }
