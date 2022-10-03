@@ -13,14 +13,14 @@ namespace yoBulletIn.Services
     {
         public readonly AppDbContext _context;
         IEnumerable<ItemImages> ImagesList { get; set; }
-        
+        private readonly UserManager<User> _userManager;
 
-        public DbRepository(AppDbContext context)
+        
+        public DbRepository(AppDbContext context, UserManager<User> userManager)
         {
             _context = context;
-            
+            _userManager = userManager;
         }
-
 
         public Item GetItemByID(Guid id)
         {   var model = _context.Items.FirstOrDefault(x => x.Id == id);
@@ -60,7 +60,7 @@ namespace yoBulletIn.Services
         public void DeleteItem(Guid id)
         {
             _context.Items.Remove(new Item { Id = id});
-            _context.SaveChangesAsync();
+            _context.SaveChanges();
         }
 
         public IEnumerable<Item> GetAllItems()
@@ -74,6 +74,7 @@ namespace yoBulletIn.Services
             foreach (var ad in ADs)
             {
                 ad.ImgPath = GetAllItemImages(ad.Id);
+                ad.ItemMesages = GetMessagesByItemId(ad.Id);
             }
             return ADs;
         }
@@ -98,10 +99,9 @@ namespace yoBulletIn.Services
             return _context.Items.Skip(Page-1 * Count).Take(Count).ToList();
         }
 
-        public IEnumerable<PM> GetMessagesByItemId(Guid ID)
+        public List<PM> GetMessagesByItemId(Guid ID)
         {
             return _context.PMs.Where(x => x.ItemId == ID).ToList();
         }
-
     }
 }

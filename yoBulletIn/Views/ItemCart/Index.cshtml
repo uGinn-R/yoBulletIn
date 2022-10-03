@@ -13,15 +13,11 @@
                      data-allowfullscreen="true"
                      data-nav="thumbs"
                      data-maxheight="500">
-                    @if (Model.ImgPath == null || Model.ImgPath.Count == 0)
-                    {
-                        <a href="#!"><img class="card-img-top" src="~/images/no_image.png"></a>
-                    }
-                    else
-                        @foreach (var img in Model.ImgPath)
-                        {
-                            <a href="#!"><img class="card-img-top" src="@img.ItemImage"></a>
-                        }
+                    @{ 
+                        string titleImage = Model.ImgPath.Count > 0 ?
+                                            Model.ImgPath.FirstOrDefault().ItemImage : "/images/no_image.png";
+    }
+                        <a><img class="card-img-top" src="@titleImage"></a>
                 </div>
 
             </div>
@@ -104,6 +100,14 @@
                             <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordion2">
                                 <div class="accordion-body">
                                     <ul id="messagesList" style="max-height:120px" class="overflow-auto">
+                                        @{ if (Model.ItemMesages.Count > 0)
+                                            {
+                                                foreach (var pm in Model.ItemMesages)
+                                                {
+                                                    <li>@UserManager.FindByIdAsync(Model.ItemOwner).Result.Email [@pm.CreationTime.ToString("MM/dd/yyyy HH:mm:ss")]: @pm.Message</li>
+                                                }
+                                            }
+                                        }
                                     </ul>
                                 </div>
                             </div>

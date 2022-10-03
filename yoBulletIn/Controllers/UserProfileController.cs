@@ -16,6 +16,8 @@ namespace yoBulletIn.Controllers
     {
         private readonly IDbRepository _repo;
         readonly UserManager<User> _UserManager;
+        public User thisUser { get; set; }
+        public IEnumerable<Item> myAds { get; set; }
 
         public UserProfileController(IDbRepository repo, UserManager<User> UserManager)
         {
@@ -25,25 +27,54 @@ namespace yoBulletIn.Controllers
 
         public IActionResult Index()
         {
-            var myAds = _repo.GetMyItems(_UserManager.GetUserId(User));
-            var thisUser = _UserManager.GetUserAsync(User);
-            return View(thisUser.Result);
+            return View(FillUserModel().Result);
+        }
+
+        public IActionResult Delete(Guid id)
+        {
+            _repo.DeleteItem(id);
+
+            return RedirectToAction("Index");
         }
 
         public async Task<IActionResult> UploadAvatar(IFormFile Image)
         {
+            var currentUser = await _UserManager.GetUserAsync(User);
+
             if (Image != null)
             {
                 var response = ImageUploader.UploadAvatarImage(Image);
                     if (response.StatusCode == 200) // OK
                     {
-                        var currentUser = await _UserManager.GetUserAsync(User);
                         currentUser.AvatarImg = response.URL;
                         await _UserManager.UpdateAsync(currentUser);
-                        return View();
-                    }
+
+                        var myAds = _repo.GetMyItems(_UserManager.GetUserId(User));
+                        currentUser.UserItems = myAds;
+
+                    return View("Index", currentUser);
+                }
             }
-            return RedirectToPage("UserProfile");
+            return View("Index", currentUser);
+        }
+
+        public IActionResult ItemsPartial()
+        {
+            return PartialView("_ItemsPartial", FillUserModel().Result);
+        }
+
+        public IActionResult MessagesPartial()
+        {
+            return PartialView("_MessagesPartial", FillUserModel().Result);
+        }
+
+        public async Task<User> FillUserModel()
+        {
+            thisUser = await _UserManager.GetUserAsync(User);
+            myAds = _repo.GetMyItems(_UserManager.GetUserId(User));
+            thisUser.UserItems = myAds;
+
+            return thisUser;
         }
     }
 }

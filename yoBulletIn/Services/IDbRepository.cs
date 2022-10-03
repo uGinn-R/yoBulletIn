@@ -21,7 +21,7 @@ namespace yoBulletIn.Services
 
         public Item GetItemByID(Guid id);
 
-        public IEnumerable<PM> GetMessagesByItemId(Guid ID);
+        public List<PM> GetMessagesByItemId(Guid ID);
 
         public void SaveItem(Item item);
 

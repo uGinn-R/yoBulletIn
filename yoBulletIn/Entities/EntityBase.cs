@@ -28,6 +28,8 @@ namespace yoBulletIn.Entities
         [Display(Name = "Images")]
         public virtual List<ItemImages> ImgPath { get; set; }
 
+        public virtual List<PM> ItemMesages { get; set; }
+
         [Display(Name = "Price")]
         [DataType(DataType.Currency)]
         [Required]

@@ -1,0 +1,75 @@
+﻿@model User
+    <script src="~/js/dataTable.js"></script>
+<table id="dataTable" class="table align-middle mb-0" style="width:100%">
+    <thead>
+        <tr>
+            <th>Title</th>
+            <th>Messages</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.UserItems)
+        {
+            string titleImage = item.ImgPath.Count > 0 ?
+            item.ImgPath.FirstOrDefault().ItemImage : "/images/no_image.png";
+
+            var messagesCount = @item.ItemMesages.Count();
+            <tr>
+                <td>
+                    <div class="d-flex align-items-center">
+                        <img src="@titleImage"
+                             alt=""
+                             style="width: 100px; height: 100px"
+                             class="rounded-1" />
+                        <div class="ms-3">
+                            <a asp-controller="ItemCart" asp-action="Index" asp-route-id="@item.Id">@item.Title</a>
+                            <div style="font-size:smaller">
+                                <a>Posted: @item.Created.ToShortDateString()</a>
+                            </div>
+                        </div>
+                    </div>
+                </td>
+
+                <td>
+                    <p class="btn btn-primary" data-bs-toggle="collapse" data-bs-target="#@item.Title.Replace(" ","")" aria-expanded="false" data-toggle="tooltip" title="CLICK TO EXPAND" aria-controls="@item.Title.Replace(" ","")">
+                        @messagesCount
+                    </p><br />
+                    @if (messagesCount > 0)
+                    {
+                        <div class="collapse" id="@item.Title.Replace(" ","")">
+                            <ul style="display:block">
+                                @foreach (var msg in item.ItemMesages)
+                                {
+                                    <li>
+                                        <a>@msg.MessageAuthor at @msg.CreationTime.ToShortDateString():</a>
+                                        <p>@msg.Message</p>
+                                        <a class="btn btn-sm btn-primary" asp-controller="ItemCart" asp-action="Index" asp-route-id="@item.Id"><i class="fas fa-reply"></i> Reply</a>
+                                        <br />
+                                    </li>
+                                }
+                            </ul>
+                        </div>
+
+                    }
+                </td>
+                <td>
+                    <div class="d-inline-flex gap-2">
+                        <a class="btn btn-warning" asp-controller="Item" asp-action="Edit" asp-route-id="@item.Id"><i class="fas fa-edit"></i> Edit</a>
+                        <div class="dropdown-center">
+                            <button class="btn btn-danger dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="fas fa-trash-alt"></i>
+                                Delete
+                            </button>
+                            <div class="dropdown-menu dropdown-menu-dark text-center">
+                                <a>Confirm delete:</a>
+                                <a class="btn btn-sm btn-success mt-2 mb-2" asp-controller="UserProfile" asp-action="Delete" asp-route-id="@item.Id">YES</a>
+                                <a class="btn btn-sm btn-danger mt-2 mb-2">NO</a>
+                            </div>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

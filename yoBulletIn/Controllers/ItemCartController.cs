@@ -21,10 +21,13 @@ namespace yoBulletIn.Controllers
             _repo = repo;
             _UserManager = UserManager;
         }
+
+        [HttpGet]
         public IActionResult Index(Guid ID)
         {
             var CurrentItem = _repo.GetItemByID(ID);
-
+            CurrentItem.ItemMesages = _repo.GetMessagesByItemId(ID);
+            
             return View(CurrentItem);
         }
 
