@@ -30,9 +30,9 @@ namespace yoBulletIn.Entities
 
         public virtual List<PM> ItemMesages { get; set; }
 
+        [Required(ErrorMessage = "Price is incorrect!")]
         [Display(Name = "Price")]
         [DataType(DataType.Currency)]
-        [Required]
         public virtual decimal Price { get; set; }
 
         [DataType(DataType.DateTime)]

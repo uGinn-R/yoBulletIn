@@ -126,6 +126,9 @@
   <data name="ResultIsEmpty" xml:space="preserve">
     <value>Здається немає нічого нового...</value>
   </data>
+  <data name="searchBtn" xml:space="preserve">
+    <value>Пошук</value>
+  </data>
   <data name="Slogan" xml:space="preserve">
     <value>Вірне місце для твоїх оголошень</value>
   </data>

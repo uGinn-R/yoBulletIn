@@ -1,1 +1,65 @@
-﻿
+﻿@model User
+
+<div class="row">
+    <div class="col-md-4">
+        <div class="card mb-4">
+            <div class="card-header" style="color:chocolate">Items with messages:</div>
+            <div class="card-body">
+                <ul class="overflow-auto" style="position:sticky">
+                    @foreach (var item in Model.UserItems)
+                    {
+                        string titleImage = item.ImgPath.Count > 0 ?
+                            item.ImgPath.FirstOrDefault().ItemImage : "/images/no_image.png";
+
+                        var messagesCount = @item.ItemMesages.Count();
+
+
+                        if (messagesCount > 0)
+                        {
+                            <li>
+                                <div class="d-flex align-items-center">
+                                    <img src="@titleImage"
+                                         alt=""
+                                         style="width: 100px; height: 100px"
+                                         class="rounded-1" />
+                                    <div class="ms-3">
+                                        <a class="btn btn-sm btn-primary" href="#@item.Title.Replace(" ", "")">Read</a>
+
+                                        <div style="font-size:smaller">
+                                            <a>Posted: @item.Created.ToShortDateString()</a>
+                                            <p>Messages: @messagesCount</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                        }
+                    }
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-8">
+        <div class="card mb-8">
+            <div class="card-header" style="color:chocolate">Messages:</div>
+            @foreach (var item in Model.UserItems)
+            {
+                if (item.ItemMesages.Count() > 0)
+                {
+                    <a class="fw-bold" id="@item.Title.Replace(" ", "")" asp-controller="ItemCart" asp-action="Index" asp-route-id="@item.Id">Messages for @item.Title</a>
+                    <ul class="list-group" id="msgList" data-bs-spy="scroll">
+                       
+                        @foreach (var msg in item.ItemMesages)
+                        {
+                            <li class="list-group-item">
+                                <p>@msg.MessageAuthor wrote at @msg.CreationTime: </p>
+                                <p>@msg.Message</p>
+                            </li>
+                        }
+                    </ul>
+                }
+            }
+
+        </div>
+    </div>
+</div>

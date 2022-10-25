@@ -37,7 +37,7 @@
                     </p><br />
                     @if (messagesCount > 0)
                     {
-                        <div class="collapse" id="@item.Title.Replace(" ","")">
+                        <div class="collapse" style="overflow-y:scroll; max-height:200px" id="@item.Title.Replace(" ","")">
                             <ul style="display:block">
                                 @foreach (var msg in item.ItemMesages)
                                 {
@@ -50,7 +50,6 @@
                                 }
                             </ul>
                         </div>
-
                     }
                 </td>
                 <td>

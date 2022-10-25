@@ -22,7 +22,6 @@ namespace yoBulletIn.Controllers
             _UserManager = UserManager;
         }
 
-        [HttpGet]
         public IActionResult Index(Guid ID)
         {
             var CurrentItem = _repo.GetItemByID(ID);

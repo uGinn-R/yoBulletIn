@@ -16,8 +16,6 @@ namespace yoBulletIn.Controllers
     {
         private readonly IDbRepository _repo;
         readonly UserManager<User> _UserManager;
-        public User thisUser { get; set; }
-        public IEnumerable<Item> myAds { get; set; }
 
         public UserProfileController(IDbRepository repo, UserManager<User> UserManager)
         {
@@ -25,9 +23,9 @@ namespace yoBulletIn.Controllers
             _UserManager = UserManager;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View(FillUserModel().Result);
+            return View(await FillUserModelAsync());
         }
 
         public IActionResult Delete(Guid id)
@@ -58,23 +56,23 @@ namespace yoBulletIn.Controllers
             return View("Index", currentUser);
         }
 
-        public IActionResult ItemsPartial()
+        public async Task<IActionResult> ItemsPartial()
         {
-            return PartialView("_ItemsPartial", FillUserModel().Result);
+            return PartialView("_ItemsPartial", await FillUserModelAsync());
         }
 
-        public IActionResult MessagesPartial()
+        public async Task<IActionResult> MessagesPartial()
         {
-            return PartialView("_MessagesPartial", FillUserModel().Result);
+            return PartialView("_MessagesPartial", await FillUserModelAsync());
         }
 
-        public async Task<User> FillUserModel()
+        private async Task<User> FillUserModelAsync()
         {
-            thisUser = await _UserManager.GetUserAsync(User);
-            myAds = _repo.GetMyItems(_UserManager.GetUserId(User));
-            thisUser.UserItems = myAds;
+            var ThisUser = await _UserManager.GetUserAsync(User);
+            var MyAds = _repo.GetMyItems(_UserManager.GetUserId(User));
+            ThisUser.UserItems = MyAds;
 
-            return thisUser;
+            return ThisUser;
         }
     }
 }

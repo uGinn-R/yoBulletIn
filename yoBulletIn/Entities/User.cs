@@ -9,7 +9,7 @@ namespace yoBulletIn.Entities
 {
     public class User : IdentityUser
     {
-        public User() => Registered = DateTime.UtcNow;
+        public User() => Registered = Registered.Equals(DateTime.MinValue) ? DateTime.UtcNow : Registered;
 
         [DataType(DataType.DateTime)]
         public DateTime Registered { get; set; }

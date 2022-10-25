@@ -9,7 +9,7 @@
             <ul class="navbar-nav me-auto">
                 <li class="nav-item">
                     <a class="nav-link active" asp-area="" asp-controller="Home" asp-action="Index">
-                        Home
+                        @localizer["Home"]
                         <span class="visually-hidden">(current)</span>
                     </a>
                 </li>
@@ -17,11 +17,11 @@
                 @if (SignInManager.IsSignedIn(User))
                 {
                     <li class="nav-item">
-                        <a class="nav-link" asp-area="" asp-controller="Item" asp-action="CreateItem">Create ad</a>
+                        <a class="nav-link" asp-area="" asp-controller="Item" asp-action="CreateItem">@localizer["CreateAd"]</a>
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link" asp-controller="UserProfile" asp-action="Index">Profile</a>
+                        <a class="nav-link" asp-controller="UserProfile" asp-action="Index">@localizer["Profile"]</a>
                         <span style="visibility:hidden" class="badge rounded-pill bg-danger" id="badgeCounter">
                             0
                         </span>
@@ -29,17 +29,17 @@
                  }
 
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">LANGUAGE</a>
+                        <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">@localizer["LANGUAGE"]</a>
                         <div class="dropdown-menu">
-                            <a class="dropdown-item" asp-controller="Home" asp-action="SetLanguage" asp-route-culture="en" asp-route-returnUrl="@Context.Request.Path">English</a>
-                            <a class="dropdown-item" asp-controller="Home" asp-action="SetLanguage" asp-route-culture="uk" asp-route-returnUrl="@Context.Request.Path">Ukrainian</a>
+                            <a class="dropdown-item" asp-controller="Home" asp-action="SetLanguage" asp-route-culture="en" asp-route-returnUrl="@Context.Request.Path">@localizer["English"]</a>
+                            <a class="dropdown-item" asp-controller="Home" asp-action="SetLanguage" asp-route-culture="uk" asp-route-returnUrl="@Context.Request.Path">@localizer["Ukrainian"]</a>
                         </div>
                     </li>
                 </ul>
             <partial name="_LoginPartial" />
             <form class="d-flex" method="get" asp-controller="Home" asp-action="Search">
                 <input class="form-control me-sm-2" type="text" name="query" placeholder="Search">
-                <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
+                <button class="btn btn-secondary my-2 my-sm-0" type="submit">@localizer["searchBtn"]</button>
             </form>
         </div>
     </div>

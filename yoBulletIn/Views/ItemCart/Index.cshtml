@@ -5,27 +5,28 @@
 <title>@Model.Title</title>
 <div class="container-fluid">
     <div class="row">
-
         <div class="col-lg-8">
-
             <div class="card mb-4">
                 <div class="fotorama"
                      data-allowfullscreen="true"
                      data-nav="thumbs"
                      data-maxheight="500">
-                    @{ 
+                    @{
                         string titleImage = Model.ImgPath.Count > 0 ?
                                             Model.ImgPath.FirstOrDefault().ItemImage : "/images/no_image.png";
-    }
-                        <a><img class="card-img-top" src="@titleImage"></a>
+                    }
+                    <a><img class="card-img-top" src="@titleImage"></a>
                 </div>
-
             </div>
 
             <div class="card mb-4">
                 <div class="card-body">
-                    <div class="small text-muted">@Model.Created.ToShortDateString()</div>
-                    <h2 class="card-title">@Model.Title</h2>
+                    <div class="small text-muted">Posted: @Model.Created.ToShortDateString()</div>
+                    <h2 class="card-title fw-bold">@Model.Title</h2>
+                    <h3 class="fw-semibold">Price: @Model.Price</h3><br />
+                    <div>
+                        <span class="badge rounded-pill text-bg-secondary">@Model.Category</span>
+                    </div><br />
                     <p class="card-text">@Html.Raw(Model.Description)</p>
                     @*<a class="btn btn-primary" href="#!">Read more →</a>*@
                 </div>
@@ -94,7 +95,7 @@
                             <h2 class="accordion-header" id="headingTwo">
                                 <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
                                     MESSAGES
-                                  
+
                                 </button>
                             </h2>
                             <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordion2">

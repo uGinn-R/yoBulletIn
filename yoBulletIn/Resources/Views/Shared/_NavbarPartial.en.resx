@@ -117,19 +117,25 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Latest" xml:space="preserve">
-    <value>Latest added ads:</value>
+  <data name="CreateAd" xml:space="preserve">
+    <value>Create Ad</value>
   </data>
-  <data name="ResultIsEmpty" xml:space="preserve">
-    <value>Oops! Looks like there is nothing to show...</value>
+  <data name="English" xml:space="preserve">
+    <value>English</value>
+  </data>
+  <data name="Home" xml:space="preserve">
+    <value>Home</value>
+  </data>
+  <data name="LANGUAGE" xml:space="preserve">
+    <value>LANGUAGE</value>
+  </data>
+  <data name="Profile" xml:space="preserve">
+    <value>Profile</value>
   </data>
   <data name="searchBtn" xml:space="preserve">
     <value>Search</value>
   </data>
-  <data name="Slogan" xml:space="preserve">
-    <value>The right place for your ADs</value>
-  </data>
-  <data name="Title" xml:space="preserve">
-    <value>Home Page</value>
+  <data name="Ukrainian" xml:space="preserve">
+    <value>Ukrainian</value>
   </data>
 </root>

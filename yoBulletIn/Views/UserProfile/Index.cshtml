@@ -1,58 +1,58 @@
 ﻿@model User
 @{
+    ViewData["Title"] = localizer["Profile"];
 }
+    <section class="py-5">
+        <div class="row align-items-center">
+            <div class="col-md-4"><img class="card-img-top mb-5 mb-md-0 rounded-1 img-fluid" src="@Model.AvatarImg" alt="title_image" /></div>
+            <div class="col-md-8">
+                <h1 class="display-5 fw-bolder">@Model.Email</h1>
+                <div class="form-group">
+                    <form method="post" enctype="multipart/form-data" asp-action="UploadAvatar">
+                        <h4>@localizer["Personalize"]</h4>
+                        <div class="card mb-2">
+                            <div class="card-header">
+                                @localizer["SelectImages"]
+                            </div>
+                            <div class="card-body">
 
-<section class="py-5">
-    <div class="row align-items-center">
-        <div class="col-md-4"><img class="card-img-top mb-5 mb-md-0 rounded-1 img-fluid" src="@Model.AvatarImg" alt="title_image" /></div>
-        <div class="col-md-8">
-            <h1 class="display-5 fw-bolder">@Model.Email</h1>
-            <div class="form-group">
-                <form method="post" enctype="multipart/form-data" asp-action="UploadAvatar">
-                    <h4>Personalize:</h4>
-                    <div class="card mb-2">
-                        <div class="card-header">
-                            Select image (drag and drop supported):
-                        </div>
-                        <div class="card-body">
-
-                            <div class="form-group">
-                                <label>Upload images</label>
-                                <div class="col-sm-10">
-                                    <div class="custom-file">
-                                        <input type="file" name="Image" id="file-input" class="custom-file-input" multiple />
+                                <div class="form-group">
+                                    <label>@localizer["UploadImages"]</label>
+                                    <div class="col-sm-10">
+                                        <div class="custom-file">
+                                            <input type="file" name="Image" id="file-input" class="custom-file-input" multiple />
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="col-sm-10"><span id="preview"></span></div>
-                            </div><br />
-                            <div class="form-group">
-                                <div class="col-sm-10">
-                                    @Html.SubmitBtn("Submit")
+                                    <div class="col-sm-10"><span id="preview"></span></div>
+                                </div><br />
+                                <div class="form-group">
+                                    <div class="col-sm-10">
+                                        @Html.SubmitBtn("Submit")
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </form>
-            </div>
-            <div class="card mb-4">
-                <div class="card-header">Actions:</div>
-                <div class="card-body">
-                    <a class="btn btn-outline-success" id="itemsBtn">Show my items</a>
-                    <a class="btn btn-outline-warning" id="messagesBtn">Show messages</a>
+                    </form>
                 </div>
+                <div class="card mb-4">
+                    <div class="card-header">@localizer["Actions"]</div>
+                    <div class="card-body">
+                        <a class="btn btn-outline-success" id="itemsBtn">@localizer["ShowMyItems"]</a>
+                        <a class="btn btn-outline-warning" id="messagesBtn">@localizer["ShowMessages"]</a>
+                    </div>
+                </div>
+
             </div>
+        </div>
+    </section>
 
+    <script src="~/js/dataTable.js"></script>
+
+    <div class="container-fluid">
+        <div class="row">
+            <script src="~/js/PartialSelector.js"></script>
+            <div id="RenderZone">
+
+            </div>
         </div>
     </div>
-</section>
-
-<script src="~/js/dataTable.js"></script>
-
-<div class="container-fluid">
-    <div class="row">
-        <script src="~/js/PartialSelector.js"></script>
-        <div id="RenderZone">
-
-        </div>
-    </div>
-</div>
